@@ -12,6 +12,8 @@ else:
 import Main
 import os
 import shutil
+import tempfile
+import json
 
 class Test(unittest.TestCase):
     '''
@@ -20,21 +22,39 @@ class Test(unittest.TestCase):
     def testGetSinBD(self):
         request = webapp2.Request.blank("/")
         response = request.get_response(service.app)
-        response2 = webapp2.Response.body('status 404')
-        self.assertDictEqual(response, response2)
-        pass
+        self.assertDictEqual(response.body,"")
     
     def testGetConBD(self):
-        pass
+        request = webapp2.Request.blank("/")
+        response = request.get_response(service.app)
+        data = json.load(open("datos.json", "r"))
+        body = json.dumps(data)
+        self.assertDictEqual(response.body,body)
+        
     
     def testPostJsonSinBD(self):
-        pass
+        request = webapp2.Request.blank("/")
+        request.method = 'POST'
+        request.body = '{"prueba" : "PostJsonSinBD"}'
+        request.headers['Content-Type'] = 'application/json'
+        response = request.get_response(service.app)
+        data = '{"mensajes" : []}'
+        body = json.dumps(data)
+        self.assertDictEqual(response.body,body)
+        
     
     def testPostTextoSinBD(self):
-        pass
+        request = webapp2.Request.blank("/")
+        request.method = 'POST'
+        request.body = 'TextoPlano'
+        response = request.get_response(service.app)
+        data = '{"mensajes" : []}'
+        body = json.dumps(data)
+        self.assertDictEqual(response.body,body)
     
     def testPostJsonConBD(self):
-        pass
+        data = '{"mensajes" : []}'
+        json.dumps(data)
     
     def testPostTextoConBD(self):
         pass
