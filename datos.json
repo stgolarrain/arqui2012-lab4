@@ -1,0 +1,12 @@
+{
+	"mensajes" :[
+		"Primer mensaje",
+		"Otro mensaje",
+		{
+			"autor" : "slarrain",
+			"texto" : "Mensaje en JSON",
+			"puntaje" : 120
+		}
+	] 
+	
+}
